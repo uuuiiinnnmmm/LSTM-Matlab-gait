@@ -66,11 +66,11 @@ To successfully run this project, your environment must meet the following requi
 
 - **Required MATLAB Toolboxes:**
 
-  -Deep Learning Toolbox™
+  - Deep Learning Toolbox™
 
-  -Statistics and Machine Learning Toolbox™
+  - Statistics and Machine Learning Toolbox™
 
-  -(Optional) Signal Processing Toolbox™
+  - (Optional) Signal Processing Toolbox™
 
 A detailed list of dependencies can be found in the requirements.txt file.
 
@@ -90,114 +90,82 @@ cd gait-analysis-lstm
 
 **Step 2: Add Your Raw Data**
 
-    Navigate to the data/RawData/ directory.
+1.Navigate to the data/RawData/ directory.
 
-    Place your raw .mat files inside this folder.
+2.Place your raw .mat files inside this folder.
 
-    Crucial: Ensure each .mat file contains a single variable named data with dimensions N x D (N = time points, D = features). The filename (e.g., Healthy.mat, PatientA.mat) will be automatically used as the class label.
+3.Crucial: Ensure each .mat file contains a single variable named data with dimensions N x D (N = time points, D = features). The filename (e.g., Healthy.mat, PatientA.mat) will be automatically used as the class label.
 
 **Step 3: Run the Preprocessing Script**
 
-    Open MATLAB.
+1.Open MATLAB.
 
-    Navigate the MATLAB environment to the project's root directory (gait-analysis-lstm/).
+2.Navigate the MATLAB environment to the project's root directory (gait-analysis-lstm/).
 
-    Execute the preprocessing script from the MATLAB Command Window:
-    code Matlab
-
-    IGNORE_WHEN_COPYING_START
-    IGNORE_WHEN_COPYING_END
-
-        
+3.Execute the preprocessing script from the MATLAB Command Window:
+  ```bash
     run('scripts/preprocess_gait_data.m');
-
+```
       
 
-    This will create a new file, data/preprocessed_gait_data.mat, containing the structured training and testing datasets.
+This will create a new file, data/preprocessed_gait_data.mat, containing the structured training and testing datasets.
 
 **Step 4: Run the Training Script**
 
-    Once preprocessing is complete, execute the model training script in the same way:
-    code Matlab
-
-    IGNORE_WHEN_COPYING_START
-    IGNORE_WHEN_COPYING_END
-
-        
+Once preprocessing is complete, execute the model training script in the same way:
+```bash   
     run('scripts/train_gait_lstm.m');
-
+```
       
 
-    This will initialize the training process. A real-time training progress plot will appear. Upon completion, the final test accuracy and a confusion matrix figure will be generated.
+This will initialize the training process. A real-time training progress plot will appear. Upon completion, the final test accuracy and a confusion matrix figure will be generated.
 
 ## ⚙️ The Workflow in Detail
 
 The project pipeline is executed in two primary stages:
 **1. Data Preprocessing (preprocess_gait_data.m)**
 
-    Load: Ingests all .mat files from the data/RawData/ directory.
+- Load: Ingests all .mat files from the data/RawData/ directory.
 
-    Window: Segments continuous data streams into overlapping windows of a predefined size (e.g., 128 time steps).
+- Window: Segments continuous data streams into overlapping windows of a predefined size (e.g., 128 time steps).
 
-    Label: Assigns a class label to each window based on its source filename.
+- Label: Assigns a class label to each window based on its source filename.
 
-    Partition: Splits the data into training (70%) and testing (30%) sets while maintaining class distribution.
+- Partition: Splits the data into training (70%) and testing (30%) sets while maintaining class distribution.
 
-    Normalize: Calculates the mean and standard deviation from the training data and applies Z-score normalization to both training and testing sets.
+- Normalize: Calculates the mean and standard deviation from the training data and applies Z-score normalization to both training and testing sets.
 
-    Save: Saves the processed, partitioned, and normalized data into a single preprocessed_gait_data.mat file.
+- Save: Saves the processed, partitioned, and normalized data into a single preprocessed_gait_data.mat file.
 
 **2. Model Training & Evaluation (train_gait_lstm.m)**
 
-    Load: Loads the preprocessed_gait_data.mat file.
+- Load: Loads the preprocessed_gait_data.mat file.
 
-    Define Architecture: Defines a stacked LSTM network, including sequence input, LSTM, dropout, fully connected, softmax, and classification layers.
+- Define Architecture: Defines a stacked LSTM network, including sequence input, LSTM, dropout, fully connected, softmax, and classification layers.
 
-    Train: Trains the network using the Adam optimizer with specified hyperparameters (epochs, learning rate, etc.).
+- Train: Trains the network using the Adam optimizer with specified hyperparameters (epochs, learning rate, etc.).
 
-    Evaluate: Assesses the trained model's performance on the unseen test set and reports the final classification accuracy.
+- Evaluate: Assesses the trained model's performance on the unseen test set and reports the final classification accuracy.
 
-    Visualize: Generates and displays a confusion matrix to provide detailed insights into the model's performance across different classes.
+- Visualize: Generates and displays a confusion matrix to provide detailed insights into the model's performance across different classes.
 
 ## 📊 Results
 
 After successfully running the training script, the model's performance metrics will be available. The expected outputs are:
 
-    Final Test Accuracy: Printed directly in the MATLAB Command Window.
+1.Final Test Accuracy: Printed directly in the MATLAB Command Window.
 
-    Confusion Matrix: A new figure window displaying the classification results for the test set, allowing for a detailed error analysis.
+2.Confusion Matrix: A new figure window displaying the classification results for the test set, allowing for a detailed error analysis.
 
 You can save the generated figures and trained model net object in the results/ folder for future reference.
 
 You can insert an example image of your results here:
-code Markdown
-IGNORE_WHEN_COPYING_START
-IGNORE_WHEN_COPYING_END
-
-    
+```bash
 <!-- ![Confusion Matrix Example](results/confusion_matrix.png) -->
+```
 
-  
+## 🙏 Acknowledgments
 
-🤝 How to Contribute
+- This project was inspired by the need for a clear and reproducible workflow in academic research for time-series classification.
 
-Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are greatly appreciated.
-
-    Fork the Project
-
-    Create your Feature Branch (git checkout -b feature/AmazingFeature)
-
-    Commit your Changes (git commit -m 'Add some AmazingFeature')
-
-    Push to the Branch (git push origin feature/AmazingFeature)
-
-    Open a Pull Request
-
-📜 License
-
-This project is distributed under the MIT License. See the LICENSE file for more information.
-🙏 Acknowledgments
-
-    This project was inspired by the need for a clear and reproducible workflow in academic research for time-series classification.
-
-    Thanks to the MathWorks community for their excellent documentation on the Deep Learning Toolbox.
+- Thanks to the MathWorks community for their excellent documentation on the Deep Learning Toolbox.
