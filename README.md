@@ -104,7 +104,7 @@ cd gait-analysis-lstm
 
 3.Execute the preprocessing script from the MATLAB Command Window:
   ```bash
-    run('scripts/preprocess_gait_data.m');
+  run('scripts/preprocess_gait_data.m');
 ```
       
 
@@ -114,7 +114,7 @@ This will create a new file, data/preprocessed_gait_data.mat, containing the str
 
 Once preprocessing is complete, execute the model training script in the same way:
 ```bash   
-    run('scripts/train_gait_lstm.m');
+run('scripts/train_gait_lstm.m');
 ```
       
 
