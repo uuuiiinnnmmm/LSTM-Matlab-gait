@@ -1,0 +1,18 @@
+# MATLAB auto-generated files
+*.asv
+*.bak
+*.log
+
+# Large data files - DO NOT TRACK DATA
+# 我们只追踪代码，不追踪数据和结果
+data/RawData/*
+data/preprocessed_gait_data.mat
+
+# Results and outputs
+results/*
+*.png
+*.jpg
+
+# OS-specific files
+.DS_Store
+Thumbs.db

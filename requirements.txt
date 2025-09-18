@@ -1,0 +1,6 @@
+MATLAB R2023a
+
+Required Toolboxes:
+- Deep Learning Toolbox
+- Signal Processing Toolbox
+- Statistics and Machine Learning Toolbox
