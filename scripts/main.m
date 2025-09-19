@@ -3,7 +3,7 @@
 % 描述:
 %   1. 从多个.mat文件加载原始IMU步态数据。
 %   2. 将每个.mat文件的数据保存为一个单独的Excel工作表。
-%   3. (可选) 从生成的Excel文件中读取数据进行后续处理。
+%   3. 从生成的Excel文件中读取数据进行后续处理。
 %   4. 对数据进行分窗、标注、归一化和数据集划分。
 %   5. 将预处理完成的数据保存为 "preprocessed_data.mat"。
 % -------------------------------------------------------------------------
@@ -14,8 +14,6 @@ clear; clc; close all;
 disp('Part 1: Loading .mat files and converting to Excel...');
 
 % --- 用户配置 ---
-% 假设您的.mat文件存储在一个名为 "RawData" 的文件夹中
-% 每个文件代表一个类别/用户，例如: UserA.mat, UserB.mat, Healthy.mat
 rawDataFolder = 'RawData'; 
 outputExcelFile = 'GaitData.xlsx';
 
@@ -38,9 +36,6 @@ for i = 1:length(matFiles)
     % 加载.mat文件
     loadedData = load(filePath);
     
-    % --- 重要假设 ---
-    % 假设每个.mat文件中有一个名为'data'的变量，它是一个 N x 6 的矩阵
-    % 如果您的变量名不同，请修改下面这行代码
     imuData = loadedData.data; 
     
     % 从文件名提取标签 (例如 'UserA.mat' -> 'UserA')
@@ -61,9 +56,8 @@ disp('---------------------------------');
 
 %% =================== Part 2: 读取数据并进行预处理 ====================
 % 在这一部分，我们直接使用上一步加载到内存中的`rawData`和`rawLabels`
-% 如果您确实需要从Excel读取，可以取消注释下面的代码块
 
-% % --- (可选) 从Excel文件读取数据 ---
+% % --- 从Excel文件读取数据 ---
 % disp('Part 2: Reading data from Excel for preprocessing...');
 % sheets = sheetnames(outputExcelFile);
 % rawDataFromExcel = cell(1, length(sheets));
@@ -116,7 +110,7 @@ testData = segments(testIdx);
 testLabels = segmentLabels(testIdx);
 
 % --- 数据归一化 ---
-% 重要：只使用训练数据计算均值和标准差
+% 只使用训练数据计算均值和标准差
 fprintf('Normalizing data based on training set statistics...\n');
 allTrainData = cat(3, trainData{:});
 mu = mean(allTrainData, [2 3]);
