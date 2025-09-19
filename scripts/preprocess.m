@@ -31,12 +31,6 @@ for i = 1:length(matFiles)
     % 加载.mat文件
     loadedData = load(filePath);
     
-    % --- 重要假设 ---
-    % 假设每个.mat文件中有一个名为'data'的变量，它是一个 N x 6 的矩阵。
-    % 如果您的变量名不同 (例如 'imu_data', 'gait_signal')，
-    % 请修改下面这行代码中的 'data'。
-    % -------------------
-    % 示例: 如果变量名是 'gait_signal', 就改成 loadedData.gait_signal
     if isfield(loadedData, 'data')
         imuData = loadedData.data;
     else
@@ -44,7 +38,7 @@ for i = 1:length(matFiles)
         error('Variable "data" not found in file: %s. Please check the variable name inside your .mat file.', fileName);
     end
     
-    % 从文件名提取标签 (例如 'UserA.mat' -> 'UserA')
+    % 从文件名提取标签
     [~, labelName, ~] = fileparts(fileName);
     
     % 将数据和标签存储到cell数组中
@@ -60,8 +54,8 @@ disp('---------------------------------');
 disp('Part 2: Starting data preprocessing...');
 
 % --- 用户配置 ---
-windowSize = 128;       % 每个步态序列的长度 (时间步)
-overlapPercentage = 0.5;% 窗口重叠率 (50%)
+windowSize = 128;       % 每个步态序列的长度
+overlapPercentage = 0.5;% 窗口重叠率
 overlapLength = floor(windowSize * overlapPercentage);
 
 % --- 分窗与标注 ---
@@ -97,7 +91,7 @@ testData = segments(testIdx);
 testLabels = segmentLabels(testIdx);
 
 % --- 数据归一化 ---
-% 重要：只使用训练数据计算均值和标准差
+% 只使用训练数据计算均值和标准差
 fprintf('Normalizing data based on training set statistics...\n');
 allTrainData = cat(3, trainData{:});
 mu = mean(allTrainData, [2 3]);
